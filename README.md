@@ -44,19 +44,4 @@ The pipeline was smoke-tested end to end on *synthetic* prices only (plumbing ch
 | ... | | | | | | |
 | PORTFOLIO | | | | | | |
 
-## Limitations
-- One train/test split, one test period. A good or bad result is a single draw, not proof.
-- Multiple testing: with ~231 pairs, about 12 pass p < 0.05 by chance.
-- Frozen hedge ratios: no re-estimation during the test window, so relationship drift hurts.
-- Survivorship bias: the universe is today's large banks; failed/acquired banks are absent.
-- Cost model: flat 5 bps per side. Ignores short borrow fees, market impact, spread widening in stress.
-- Daily closes only, fills at the close, no intraday risk.
-- The ML filter is trained on in-sample spreads, which look more mean-reverting than out-of-sample ones.
-- Parameters (2.0 / 0.5 / 4.0, 60-day window) were set up front, not tuned on the test window. Changing them after seeing test results would invalidate it.
 
-## Why the edge may not persist live
-- Same-sector cointegration is regime-dependent; rate shocks and bank-specific events (e.g. 2023 regional-bank stress) can permanently break spreads.
-- Stat-arb is crowded; well-known pairs get arbitraged away.
-- Live frictions (borrow availability, partial fills, slippage in volatile markets) exceed backtest assumptions.
-- Selection bias: pairs that look best in training are partly the luckiest ones.
-- Stop-outs cluster in stress periods, when correlations spike and spreads diverge together.
